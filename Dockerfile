@@ -7,9 +7,8 @@ WORKDIR /app
 # Copy package.json first for better Docker layer caching
 COPY package.json ./
 
-# Install dependencies
-# The base image already has Chrome installed, so this should be much faster
-RUN npm ci --only=production && npm cache clean --force
+# Install dependencies using npm install instead of npm ci
+RUN npm install --only=production && npm cache clean --force
 
 # Copy application code
 COPY . .
