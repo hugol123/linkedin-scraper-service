@@ -89,26 +89,25 @@ async function scrapeLinkedInProfile(requestData) {
   
   // Browser launch options optimized for cloud deployment
   const launchOptions = {
-  headless: 'new',
-  executablePath: process.env.GOOGLE_CHROME_BIN || '/usr/bin/google-chrome-stable',
-  args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-dev-shm-usage',
-    '--disable-accelerated-2d-canvas',
-    '--no-first-run',
-    '--no-zygote',
-    '--single-process',
-    '--disable-gpu',
-    '--disable-web-security',
-    '--disable-features=VizDisplayCompositor',
-    '--disable-extensions',
-    '--disable-plugins',
-    '--disable-images',
-    '--disable-javascript',
-    '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-  ]
-};
+    headless: 'new', // Use new headless mode
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process', // Important for cloud deployments
+      '--disable-gpu',
+      '--disable-web-security',
+      '--disable-features=VizDisplayCompositor',
+      '--disable-extensions',
+      '--disable-plugins',
+      '--disable-images', // Speed up loading
+      '--disable-javascript', // We don't need JS for basic profile scraping
+      '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    ]
+  };
   
   // Add proxy configuration if enabled
   if (use_proxy && PROXY_CONFIG.enabled) {
@@ -491,4 +490,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
